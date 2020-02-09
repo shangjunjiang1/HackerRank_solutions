@@ -1,5 +1,3 @@
-question link: https://www.hackerrank.com/challenges/harry-potter-and-wands/problem?h_r=next-challenge&h_v=zen&h_r=next-challenge&h_v=zen
-
 select id, age, A.coins_needed, A.power
 FROM 
 (select code, power, min(coins_needed) as coins_needed
