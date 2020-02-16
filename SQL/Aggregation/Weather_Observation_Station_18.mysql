@@ -1,0 +1,4 @@
+select round((ABS(temp.a - temp.c)+ABS(temp.b - temp.d)), 4) as distance
+from 
+(select min(LAT_N) a, min(LONG_W) b, max(LAT_N) c, max(LONG_W) d
+from station) as temp
