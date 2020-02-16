@@ -1,0 +1,4 @@
+select round((sqrt(power((temp.b-temp.a),2)+power((temp.d-temp.c),2))), 4) as distance
+from 
+(select min(LAT_N) a, min(LONG_W) c, max(LAT_N) b, max(LONG_W) d
+from station) as temp
