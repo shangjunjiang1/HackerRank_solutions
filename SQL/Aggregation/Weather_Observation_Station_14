@@ -1,0 +1,5 @@
+select max(temp.LAT_N)
+from 
+(SELECT ROUND(LAT_N,4) as LAT_N
+from station
+where LAT_N < 137.2345) as temp
