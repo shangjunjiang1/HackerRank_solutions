@@ -1,0 +1,8 @@
+SET @row_number = 0; 
+select round(temp.LAT_N, 4)
+from 
+(SELECT 
+    (@row_number:=@row_number + 1) AS num, LAT_N
+from station
+order by LAT_N) as temp
+where temp.num between (select count(*) from station)/2 and ((select count(*) from station)+1)/2
