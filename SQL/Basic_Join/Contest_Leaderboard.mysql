@@ -1,0 +1,7 @@
+select h.hacker_id, h.name, sum(sub.score) as total 
+from Hackers h join 
+(select s.hacker_id, s.challenge_id, max(s.score) as score from Submissions s group by 1,2) sub 
+on h.hacker_id = sub.hacker_id
+group by 1,2 
+having total > 0
+order by total desc, h.hacker_id
