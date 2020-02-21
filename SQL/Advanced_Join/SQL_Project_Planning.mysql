@@ -1,0 +1,8 @@
+set sql_mode = ''; /* 默认只取第一的值, make group by acceptable here */
+select t1.Start_Date, t2.End_Date
+from 
+(select Start_Date from Projects where Start_Date not in (select End_Date from Projects)) t1, 
+(select End_Date from Projects where End_Date not in (select Start_Date from Projects)) t2
+where t1.Start_Date < t2.End_Date
+group by 1
+order by DATEDIFF(t2.End_Date, t1.Start_Date), 1
