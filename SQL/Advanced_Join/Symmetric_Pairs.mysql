@@ -1,0 +1,6 @@
+select t.x, t.y from 
+(select min(f.x) as x, max(f.y) as y, (f.x+f.y) as hh, (abs(f.x-f.y)) as cc from 
+(SELECT X, Y FROM Functions) f
+group by hh, cc
+having x<=y and count(*) >1) t
+order by 1
