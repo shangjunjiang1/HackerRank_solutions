@@ -1,0 +1,12 @@
+select C.contest_id, C.hacker_id, C.name, sum(s1.total_submissions), sum(s1.total_accepted_submissions), sum(v1.total_views), sum(v1.total_unique_views)
+FROM 
+Contests C join Colleges CL ON C.contest_id = CL.contest_id
+JOIN Challenges CG on CL.college_id = CG.college_id 
+left JOIN 
+(select V.challenge_id, sum(V.total_views) as total_views, sum(V.total_unique_views) as total_unique_views from View_Stats V group by 1) v1 ON CG.challenge_id = v1.challenge_id 
+left JOIN 
+(select S.challenge_id, sum(S.total_submissions) as total_submissions, sum(S.total_accepted_submissions) as total_accepted_submissions 
+ from Submission_Stats S group by 1) s1 ON CG.challenge_id = s1.challenge_id
+group by 1,2,3
+HAVING sum(s1.total_submissions) + sum(s1.total_accepted_submissions) + sum(v1.total_views) + sum(v1.total_unique_views)> 0 
+order by 1 
