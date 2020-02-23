@@ -1,0 +1,24 @@
+SELECT TAT.*, h.name
+FROM 
+(select tt.submission_date, tt.id_cnt, min(s.hacker_id) as id
+from 
+(select dd.submission_date, count(dd.hacker_id) as id_cnt
+from (select submission_date, hacker_id, count(submission_id) as sub_num
+     from Submissions
+     group by 1, 2
+     having sub_num >= 1) dd
+group by 1) tt
+left join 
+(select t1.submission_date, t1.hacker_id , h.name from 
+(select t.submission_date, t.hacker_id, max(sub_num) as mx_num
+ from 
+    (select submission_date, hacker_id, count(submission_id) as sub_num
+     from Submissions
+     group by 1, 2) t
+group by t.submission_date, t.hacker_id) t1, Hackers h
+where t1.hacker_id = h.hacker_id) s
+on tt.submission_date = s.submission_date
+group by tt.submission_date, tt.id_cnt
+order by tt.submission_date) TAT, Hackers h
+where TAT.ID = H.hacker_id
+ORDER BY TAT.submission_date
